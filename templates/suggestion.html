@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}意见反馈 - 优酷精选{% endblock %}
+
+{% block menuSuggestion %}<li class="current_page_item"><a href="#">意见反馈</a></li>{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="article">
+    	<h3>请留下您的宝贵意见!</h3>
+        <form action="" method="post">{% csrf_token %}
+        	<p>
+				<label for="id_name">{{ form.name.label }} </label> {% if form.name.errors %} <span class="errors"> * {{ form.name.errors|join:", " }}</span> {% endif %} <br />
+				<input id="id_name" type="text" name="name" {% if form.name.data %} value={{ form.name.data }} {% endif %} size="20" maxlength="100" />
+			</p>
+        	<p>
+				<label for="id_email">{{ form.email.label }} </label> {% if form.email.errors %} <span class="errors"> * {{ form.email.errors|join:", " }}</span> {% endif %} <br />
+				<input id="id_email" type="text" name="email" {% if form.email.data %} value={{ form.email.data }} {% endif %} size="45" maxlength="100" />
+			</p>
+			<p>
+				<label for="id_content">{{ form.content.label }} </label> {% if form.content.errors %} <span class="errors"> * {{ form.content.errors|join:", " }}</span> {% endif %} <br />
+				{{ form.content }}
+			</p>
+			<p class="submit"><input type="submit" value=" 提交 " /></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

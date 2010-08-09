@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Preview your comment" %}{% endblock %}
+
+{% block content %}
+	<div class="article">
+	  	{% load comments %}
+	  	<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+		    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+		    {% if form.errors %}
+			    <h3>出错啦, 请按照提示重新提交.</h3>
+			    {% else %}
+			    <h1>{% trans "Preview your comment" %}</h1>
+			    <blockquote>{{ comment|linebreaks }}</blockquote>
+			    <p>
+			    {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit" /> {% trans "or make changes" %}:
+			    </p>
+		    {% endif %}
+		    {% for field in form %}
+		        {% if field.is_hidden %}
+		            {{ field }}
+		        {% endif %}
+		    {% endfor %}
+		    <p><lable for="id_name">昵称/网名 (必填)*</label>
+		   	{% if form.name.errors %}
+		   		<span class="errors">{{ form.name.errors.as_text }}</span>
+		   	{% endif %}
+		   	<br />
+		   	<input type="text" name="name" id="id_name" {% if form.name.data %} value={{ form.name.data }} {% endif %} /></p>
+		   	<p><lable for="id_email">电子邮件 (为您保密)*</label>
+		   	{% if form.email.errors %}
+		   		<span class="errors">{{ form.email.errors.as_text }}</span>
+		   	{% endif %}
+		   	<br />
+		   	<input type="text" name= "email" id="id_email" {% if form.email.data %} value={{ form.email.data }} {% endif %} size="45" /></p>
+			<p><lable for="id_url">个人网址 (可选)</label>
+		  	{% if form.url.errors %}
+		  		<span class="errors">{{ form.url.errors.as_text }}</span>
+		  	{% endif %}
+		  	<br />
+		  	<input type="text" name="url" id="id_url" {% if form.url.data %} value={{ form.url.data }} {% endif %} size="45" /></p>
+		  	<p><lable for="id_comment">评论内容 (必填)*</label>
+		  	{% if form.comment.errors %}
+		  		<span class="errors">{{ form.comment.errors.as_text }}</span>
+		  	{% endif %}
+		  	<br />
+		  	{{ form.comment }}</p>
+		    <p class="submit">
+		    <input type="submit" name="submit" class="submit-post" value="{% trans " 提交 " %}" />
+		    <input type="submit" name="preview" class="submit-preview" value=" 预览 " />
+		    </p>
+	  	</form>
+	</div>
+{% endblock %}

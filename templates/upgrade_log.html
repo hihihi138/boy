@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block metaKeywordsTitle %}网站建设日志{% endblock %}
+{% block metaKeywordsContent %}优酷,优酷精选,视频,视频分享,在线视频{% endblock %}
+{% block metaDescriptionContent %}网站建设日志。{% endblock %}
+
+{% block menuAboutUs %}<li class="current_page_item"><a href="#">关于本站</a></li>{% endblock %}
+
+{% block content %}
+    <!-- start content -->
+    <div id="content">
+        {% for log in object_list %}
+            <div class="post">
+                <div class="title">
+                    <h2>{{ log.log_title }}</a></h2>
+                    <p><small>发布时间 {{ log.log_time }}</small></p>
+                </div>
+                <div class="log_entry">                
+                   {{ log.log_content|linebreaks }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- end content -->
+{% endblock %}
+
+{% block page_index %}
+{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+{% endblock %}

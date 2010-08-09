@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ video.title }} - 优酷精选{% endblock %}
+{% block metaKeywordsContent %}{{ video.tags }}{% endblock %}
+{% block metaDescriptionContent %}{{ video.title }}{% endblock %}
+
+{% block content %}
+    <div id="content">
+        <div class="post">
+            {% include "includes/video.html" %}
+        </div>
+    </div>
+    
+	<div id="comment">
+    {% load comments %}
+    {% get_comment_list for video as comment_list %}
+    {% get_comment_count for video as comment_count %}
+    {% get_comment_form for video as form_list %}
+    {% if comment_count %}
+    	<h3>已经有{{ comment_count }}条评论了.</h3>
+    {% else %}
+    	<h3>还没有任何评论</h3>
+    {% endif %}
+    
+    {% for comment in comment_list %}
+    <div class="comment">
+       	{% load timezone %}
+        <small>
+        {% if user.url %}
+        	<a href="#">{{ comment.user_name }}</a>
+        {% else %}
+        	<b style="color: #1692B8">{{ comment.user_name }}</b>
+        {% endif %}
+        于 {{ comment.submit_date|date:"Y-m-d H:i:s" }} 站在{{ forloop.counter }}楼说:
+        </small>
+		<div class="comment_container">
+			<div class="avatar">
+	        	{% load gravatar %}
+        		<img src={% gravatar_url comment.user_email %}>
+        	</div>
+        	<div class="comment_content">
+		        {{ comment.comment|linebreaks }}
+			</div>
+			<div class="clear"></div>
+		</div>
+    </div>
+    {% endfor %}
+    <form id="post_comment" action="{% comment_form_target %}" method="post">{% csrf_token %}
+        {% for field in form_list %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% endif %}
+        {% endfor %}
+       	<p><lable for="id_name">昵称/网名 (必填)*</label>
+       	{% if form_list.name.errors %}
+       		<span class="errors">{{ form_list.name.errors.as_text }}</span>
+       	{% endif %}
+       	<br />
+       	<input type="text" name="name" id="id_name" {% if user.is_authenticated %} value={{ user.username }} {% endif %} /></p>
+       	<p><lable for="id_email">电子邮件 (为您保密, 支持<a href="http://en.gravatar.com" target="_blank">Gravatar</a>)*</label>
+       	{% if form_list.email.errors %}
+       		<span class="errors">{{ form_list.email.errors.as_text }}</span>
+       	{% endif %}
+       	<br />
+       	<input type="text" name= "email" id="id_email" size="45" {% if user.is_authenticated %} value={{ user.email }} {% endif %} /></p>
+	    <p><lable for="id_url">个人网址 (可选)</label>
+       	{% if form_list.url.errors %}
+       		<span class="errors">{{ form_list.url.errors.as_text }}</span>
+       	{% endif %}
+       	<br />
+       	<input type="text" name="url" id="id_url" size="45" /></p>
+       	<p><lable for="id_comment">评论内容 (必填)*</label>
+       	{% if form_list.comment.errors %}
+       		<span class="errors">{{ form_list.comment.errors.as_text }}</span>
+       	{% endif %}
+       	<br />
+       	{{ form_list.comment }}</p>
+        <input type="hidden" name="next" value="/video/{{ video.vid }}/" />
+        <input type="submit" name="submit" class="submit-post" value=" 提交 ">
+    </form>
+	</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+This is the base template.
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>{% block title %}优酷精选{% endblock %}</title>
+<meta http-equiv="Content-Language" content="zh-CN"/>
+<meta name="keywords" content="{% block metaKeywordsContent %}{% endblock %}" />
+<meta name="description" content="{% block metaDescriptionContent %}{% endblock %}" />
+<link href="/static/default.css" rel="stylesheet" type="text/css" />
+<link href="/static/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#cse").mouseover(function(){
+		$(".gsc-adBlock").hide()
+	});
+	$(":text").click(function(){
+		$(this).select()
+	});
+});
+</script>
+</head>
+<body>
+<!-- start header -->
+<div id="header">
+	<div id="headercenter">
+		<div id="logo">
+			<a href="/"><img src="/static/images/logo.jpg"></a>
+		</div>
+		<div id="menu">
+			<ul>
+	            {% block menuMainPage %}<li><a href="/">主页</a></li>{% endblock %}
+	            {% block menuPostVideo %}<li><a href="/post/">投递视频</a></li>{% endblock %}
+	            {% block menuSuggestion %}<li><a href="/suggestion/">意见反馈</a></li>{% endblock %}
+	            {% block menuAboutUs %}<li><a href="/log/">关于本站</a></li>{% endblock %}
+				<li><a href="/rss/" target="view_window"><img src="/static/images/img18.gif"></a></li>
+	        </ul>
+		</div>
+		<!-- start gcs -->
+		<div id="cse-search-form" style="width: 20%;">Loading</div>
+		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+		<script type="text/javascript">
+		  google.load('search', '1', {language : 'zh-CN'});
+		  google.setOnLoadCallback(function() {
+		    var customSearchControl = new google.search.CustomSearchControl('014162507641403348319:0ahrlt_aohe');
+		    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+		    var options = new google.search.DrawOptions();
+		    options.setSearchFormRoot('cse-search-form');
+		    
+		    options.setAutoComplete(true);
+		    customSearchControl.draw('cse', options);
+		  }, true);
+		</script>
+		<!-- end gcs -->
+		<div id="toolbar">
+			<div id="authentication">
+				{% if user.is_authenticated %}
+					<p>{{ user.username }} | <a href="/accounts/logout/">退出</a></p>
+				{% else %}
+					<p><a href="/accounts/login/">登录</a> / <a href="/accounts/register/">注册</a></p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end header -->
+<!-- start page -->
+<div id="page"> 
+    <!-- start content -->
+    <div id="cse"></div>
+    {% block content %}
+    {% endblock %}
+    <!-- end content -->
+    
+    <!-- start sidebar -->
+    {% block sidebar %}
+    {% endblock %}
+	<!-- end sidebar -->
+    
+    <!-- start page_index -->
+    {% block page_index %}
+    {% endblock %}
+    <!-- end page_index -->
+
+	<br style="clear: both;" />
+</div>
+<!-- end page -->
+<!-- start footer -->
+<div id="footer">
+	<p class="legal">
+		&copy;2010 Muer&Betty. All Rights Reserved.
+		&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+		Design by <a href="http://muerblog.appspot.com/">Muer</a>
+		&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+		Icons by <a href="http://www.douban.com/people/Pinocchios/">Betty</a>
+		&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+		Powered by <a href="http://www.djangoproject.com/">Django</a></p>
+</div>
+<!-- end footer -->
+</body>
+</html>
+

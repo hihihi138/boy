@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block metaKeywordsContent %}优酷,优酷精选,视频,视频分享,在线视频{% endblock %}
+{% block metaDescriptionContent %}每日发布优酷网的精选内容。{% endblock %}
+
+{% block menuMainPage %}<li class="current_page_item"><a href="/">主页</a></li>{% endblock %}
+
+{% block content %}
+    <!-- start content -->
+    <div id="content">
+        {% for video in object_list %}
+            <div class="post">
+                {% include "includes/video.html" %}
+            </div>
+        {% endfor %}
+		{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+	</div>
+    <!-- end content -->
+{% endblock %}
+
+{% block sidebar %}
+	<div id="sidebar">
+		<div class="sidebar">
+			<h2>标签云</h2>
+			<div class="tag_cloud">	
+				{% load tag_cloud %}
+				{% tag_cloud_for_model youku.Video as video_tags with steps=6 min_count=1 distribution=log%}
+				{% for tag in video_tags %}
+					<span class="tag-{{ tag.font_size }}"><a href="/tag/{{ tag.name }}/"> {{ tag.name }} </a></span>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="sidebar">
+			<h2>最新评论</h2>
+			<ul>
+				{% for comment in comments %}
+				{% load truncatehanzi %}
+                   <li><a href="/video/{{ comment.content_object.vid }}">{{ comment.comment|truncatehanzi:"15" }}</a></li>
+            	{% endfor %}
+			</ul>
+		</div>
+        {% if categories %}
+        <div class="sidebar">
+			<h2>视频分类</h2>
+			<ul>
+			{% for category in categories %}
+            	<li><a href="/category/{{ category.0 }}">{{ category.1 }}</a></li>
+            {% endfor %}
+            </ul>
+		</div>
+        {% endif %}
+	</div>
+{% endblock %}

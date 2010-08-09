@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}用户注册 - 优酷精选{% endblock %}
+
+{% block content %}
+<div id="content">
+	{% if user.is_authenticated %}
+		<div class="article">
+			<h3>出错啦!</h3>
+			<p>用户 {{ user.username }} 已经登录, 要注册新帐户请先<a href="/accounts/logout/">登出</a>.</p>
+		</div>
+	{% else %}
+		<div class="article">
+			<h3>请填写用户名,邮箱及密码,轻松创建新用户.</h3>
+			
+			{% if form.errors %}
+			<p class="errors">出错了!{% for error in form.non_field_errors %} {{ error }} {% endfor %}</p>
+			{% endif %}
+			 
+			<form method="post" action="" class="wide">{% csrf_token %}
+		    <p>
+		      <label for="id_username">用户名:</label>
+		      {% if form.username.errors %}
+		        <span class="errors">{{ form.username.errors.as_text }}</span>
+		      {% endif %}
+		      <br />
+		      {{ form.username }}
+		    </p>
+		    <p>
+		      <label for="id_email">Email:</label>
+		      {% if form.email.errors %}
+		        <span class="errors">{{ form.email.errors.as_text }}</span>
+		      {% endif %}
+		      <br />
+		      {{ form.email }}
+		    </p>
+		    <p>
+		      <label for="id_password1">密码:</label>
+		      {% if form.password1.errors %}
+		        <span class="errors">{{ form.password1.errors.as_text }}</span>
+		      {% endif %}
+		      <br />
+		      {{ form.password1 }}
+		    </p>
+		    <p>
+		      <label for="id_password2">确认密码:</label>
+		      {% if form.password2.errors %}
+		        <span class="errors">{{ form.password2.errors.as_text }}</span>
+		      {% endif %}
+		      <br />
+		      {{ form.password2 }}
+		    </p>
+		    <p class="submit"><input type="submit" value="注册 &rarr;"></p>
+		  </form>
+		 
+			<p>注册完成后您会收到一封邮件, 请按照邮件内容激活您的帐号.</p>
+		
+			<p>您的邮箱只被用来发送激活邮件, 因为我们和您一样讨厌垃圾邮件. ^_^</p>
+			
+			<p>注册完成后就可以完整使用所有网站功能了. 比如收藏视频, 投递视频等等.</p> 
+		</div>
+	{% endif %}
+</div>
+{% endblock %}
+{% block sidebar %}
+	<div id="sidebar">
+        <div class="sidebar">
+        	<h4>自定义头像</h4>
+			<div class="sidebar_text">
+			<p>本站使用<a href="http://en.gravatar.com" target="_blank">Gravatar</a>服务来提供用户自定义头像, 前往<a href="http://en.gravatar.com" target="_blank">Gravatar</a>网站注册并上传头像图片, 就可以在优酷精选以及其他支持Gravatar的网站轻松显示您的个性头像了.</p>
+			<p>(Gravatar<a href="http://baike.baidu.com/view/675247.htm" target="_blank">是什么</a>以及<a href="http://www.wopus.org/wordpress-deepin/tech/1640.html" target="_blank">如何注册</a>.)</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

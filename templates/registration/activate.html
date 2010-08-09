@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}激活用户 - 优酷精选{% endblock %}
+
+{% block content %}
+<div id="content">
+	<div class="article">
+	<h3>激活新用户...</h3>
+	{% if account %}
+		<p>激活成功! 现在你可以<a href="/accounts/login/">登录</a>了.</p>
+	{% else %}
+		<p>激活失败, 认证码错误或已过期.</p>
+		<p>认证码有效期为自注册日期起{{ settings.ACCOUNT_ACTIVATION_DAYS }}天内.</p>
+		<p>请检查认证码或重新<a href="/accounts/register/">注册</a>.</p>
+	{% endif %}
+	</div>
+</div>
+{% endblock %}
