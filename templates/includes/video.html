@@ -2,7 +2,7 @@
     <h2><a href="/video/{{video.vid}}/">{{ video.title }}</a></h2>
     {% load comments %}
     {% get_comment_count for video as comment_count %}
-    <p><small>{{ video.post_date }} by <a href="{{ video.posted_by.website }}">{{ video.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ video.get_category_display }}</a> {% if video.tags %} 标签:{% for tag in video.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }} </a>{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{video.vid}}/">{{ comment_count }}</a>)</small></p>
+    <p><small>{{ video.post_date }} by <a href="{{ video.posted_by.website }}">{{ video.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ video.get_category_display }}</a> {% if video.tags %} 标签:{% for tag in video.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{video.vid}}/">{{ comment_count }}</a>)</small></p>
 </div>
 <div class="entry">                
     <embed src="{{ video.flash_url }}" quality="high" width="480" height="400" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>

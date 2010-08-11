@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.syndication.views import Feed
+from django.contrib.syndication.feeds import Feed
 from youku.models import Video
 
 class LatestVideosFeed(Feed):
@@ -9,7 +9,7 @@ class LatestVideosFeed(Feed):
 	description = "优酷精选的最新更新."
 	
 	def items(self):
-		return Video.objects.all()
+		return Video.objects.all()[:30]
 		
 	def item_title(self, item):
 		return item.title
@@ -17,13 +17,13 @@ class LatestVideosFeed(Feed):
 	def item_link(self, item):
 		return "/video/" + item.vid
 		
-	def item_description(self, item):
-		return item.title
+
 	
 	def item_pubdate(self, item):
 		return item.post_date
 		
 	def item_author_name(self, item):
 		return item.posted_by
-		
+	
+	item_enclosure_mime_type = "application/x-shockwave-flash"
 	item_copyright = "版权所有 (c) 2010, Muer"

@@ -1,6 +1,10 @@
 from django.conf.urls.defaults import *
 from feeds import LatestVideosFeed
 
+site_feeds = {
+	'video': LatestVideosFeed,
+}
+
 urlpatterns = patterns('',
     (r'^$', 'youku.views.video_list_page'),
     (r'^video/(\d{4})/(\d{2})/(\d{2})/(\d{6})/$', 'youku.views.video_page'),
@@ -8,7 +12,7 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^category/([^/]+)/$', 'youku.views.category_page'),
     (r'^tag/([^/]+)/$', 'youku.views.tag_page'),
-    (r'^rss/$', LatestVideosFeed()),
+    (r'^feed/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': site_feeds}),
     (r'^post/$', 'youku.views.post_video'),
     (r'^post/thanks/$', 'youku.views.post_thanks'),
     (r'^super/posts$', 'youku.views.posted_videos'),
