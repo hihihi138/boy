@@ -16,8 +16,9 @@ class LatestVideosFeed(Feed):
 		
 	def item_link(self, item):
 		return "/video/" + item.vid
-		
 
+	def item_enclosure_url(self, item):
+		return item.flash_url
 	
 	def item_pubdate(self, item):
 		return item.post_date
