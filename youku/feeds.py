@@ -23,5 +23,4 @@ class LatestVideosFeed(Feed):
 	def item_author_name(self, item):
 		return item.posted_by
 	
-	item_enclosure_mime_type = "application/x-shockwave-flash"
 	item_copyright = "版权所有 (c) 2010, Muer"
