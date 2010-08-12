@@ -32,6 +32,8 @@ class Video(models.Model):
         dt_string = datetime.strftime(self.post_date, "%Y%m%d%H%M%S")
         return dt_string[0:4] + "/" + dt_string[4:6] + "/" + dt_string[6:8] + "/" + dt_string[8:14]
     vid = property(get_vid)
+    def get_absolute_url(self):
+        return '/video/%s' % self.vid
 
     def __unicode__(self):
         return self.title
