@@ -19,6 +19,7 @@ sitemaps = {
 urlpatterns = patterns('',
     (r'^', include('youku.urls')),
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    (r'^(robots\.txt)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     # admin related
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/',  include('registration.backends.default.urls')),

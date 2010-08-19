@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     (r'^super/posts$', 'youku.views.posted_videos'),
     (r'^suggestion/$', 'youku.views.suggestion'),
     (r'^suggestion/thanks/$', 'youku.views.suggestion_thanks'),
+    (r'^ajax/rating/(?P<amnt>\d)/$', 'youku.views.rating'),
 )
