@@ -27,7 +27,11 @@
 		<li><a href="#" onclick="vote(5, {{ video.id }}); return false;" 
 	           title='5 star out of 5' class='five-stars'>5</a></li>
 	</ul>
-	<div id='rating-stat' class='rating-stat'><strong style="color:red">{{ video.rating.get_rating|floatformat:"1" }}</strong> ({{ video.rating.votes }}人评价)</div>
+		{% if video.rating.votes %}
+		<div id='rating-stat' class='rating-stat'><strong style="color:red">{{ video.rating.get_rating|floatformat:"1" }}</strong> ({{ video.rating.votes }}人评价)</div>
+	{% else %}
+		<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
+	{% endif %}
 	<div id='current-rating-result' class='current-rating-result'></div> <!-- used to show "success" message after vote -->
 	<div class='clear'></div>
 </div>
