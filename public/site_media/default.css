@@ -51,6 +51,36 @@ ul {
 	list-style: none;
 }
 
+/* Feedback */
+
+#side_button {
+	left:0;
+	position:fixed;
+	top:40%;
+}
+
+#side_button a {
+  background-image: url(images/feedback.png);
+  display:block;
+  width:30px;
+}
+
+#side_button a.postvideo {
+  height:90px;
+}
+
+#side_button a:hover.postvideo {
+  background-position:-30px 0;
+}
+#side_button a.feedback {
+  background-position:0 -79px;
+  height:90px;
+  margin-top:5px;
+}
+#side_button a:hover.feedback {
+  background-position:-30px -80px;
+}
+
 /* Header */
 
 #header {
@@ -433,4 +463,97 @@ input.gsc-search-button {
     width: 50%;
     margin-left: 25%;
     margin-right: 25%;
+}
+
+/* rating */
+#rating{
+}
+#rating-stat{
+	font-size: 13px;
+	float: left;
+	padding: 19px 0 0 6px;
+}
+#current-rating-result{
+	//background-color:#FFFFCC;
+	color:#FF3300;
+	float:left;
+	font-size:12px;
+	margin:19px 0 0 15px;
+	//padding:2px 10px;
+}
+.star-rating{
+	list-style:none;
+	margin-left:25px !important;
+	padding:0px;
+	width: 125px;
+	height: 25px;
+	position: relative;
+	background: url(images/alt_star.gif) top left repeat-x;		
+	float: left;
+}
+.star-rating li{
+	padding:0px;
+	margin:0px;
+	/*\*/
+	float: left;
+	/* */
+}
+.star-rating li a{
+	display:block;
+	width:25px;
+	height: 25px;
+	text-decoration: none;
+	text-indent: -9000px;
+	z-index: 20;
+	position: absolute;
+	padding: 0px;
+}
+.star-rating li a:hover{
+	background: url(images/alt_star.gif) left bottom;
+	z-index: 2;
+	left: 0px;
+}
+.star-rating a:focus,
+.star-rating a:active{
+	border:0;	
+	-moz-outline-style: none;
+   	        outline: none; 
+}
+.star-rating a.one-star{
+	left: 0px;
+}
+.star-rating a.one-star:hover{
+	width:25px;
+}
+.star-rating a.two-stars{
+	left:25px;
+}
+.star-rating a.two-stars:hover{
+	width: 50px;
+}
+.star-rating a.three-stars{
+	left: 50px;
+}
+.star-rating a.three-stars:hover{
+	width: 75px;
+}
+.star-rating a.four-stars{
+	left: 75px;
+}	
+.star-rating a.four-stars:hover{
+	width: 100px;
+}
+.star-rating a.five-stars{
+	left: 100px;
+}
+.star-rating a.five-stars:hover{
+	width: 125px;
+}
+.star-rating li.current-rating{
+	background: url(images/alt_star.gif) left center;
+	position: absolute;
+	height: 25px;
+	display: block;
+	text-indent: -9000px;
+	z-index: 1;
 }

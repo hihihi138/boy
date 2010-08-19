@@ -70,3 +70,15 @@ def suggestion(request):
 	
 def suggestion_thanks(request):
 	return render_to_response('suggestion_thanks.html')
+
+from django.core import serializers
+from django.utils import simplejson
+def rating(request, amnt):
+	if request.is_ajax():
+		mimetype = 'application/json'
+		video = Video.objects.get(id=request.POST['video_id'])
+		video.rating.add(amnt, request.user, request.META['REMOTE_ADDR'])
+		data = serializers.serialize("json", [video])
+		return HttpResponse(data,mimetype)
+	else:
+		return HttpResponse(status=400)
