@@ -44,10 +44,10 @@ function vote(amnt, video_id){
 		data: {'video_id': video_id,},
 		dataType: "json",
 		success: function(data){
-			rating = (data[0].fields.rating_score)/(data[0].fields.rating_votes);
+			var rating = (data[0].fields.rating_score)/(data[0].fields.rating_votes);
 			rating = Math.round(rating*Math.pow(10,1))/Math.pow(10,1);
-			width = rating*25
-			html = "<strong style='color:red'>" + rating + "</strong> (" + data[0].fields.rating_votes + "人评价)"
+			var width = rating*25
+			var html = "<strong style='color:red'>" + rating + "</strong> (" + data[0].fields.rating_votes + "人评价)"
 			$('#'+video_id+' .current-rating').width(width + "px");
 			$('#'+video_id+' .current-rating-result').html("投票已成功!").fadeOut(5000);
 			$('#'+video_id+' .rating-stat').html(html)
