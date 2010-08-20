@@ -24,7 +24,7 @@ class Video(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, verbose_name='分类')
     tags = TagField()
     intro = models.TextField(max_length=4096, blank=True, verbose_name='视频简介')
-    rating = RatingField(range=5, can_change_vote=True, allow_anonymous=True)
+    rating = RatingField(range=5, can_change_vote=False, allow_anonymous=True)
     
     def get_star_length(self):
     	return self.rating.get_rating()*25
