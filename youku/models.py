@@ -25,6 +25,7 @@ class Video(models.Model):
     tags = TagField()
     intro = models.TextField(max_length=4096, blank=True, verbose_name='视频简介')
     rating = RatingField(range=5, can_change_vote=False, allow_anonymous=True)
+    slug = models.SlugField(max_length=40, default=datetime.now().strftime("%Y-%m-%d-%H%M%S"))
     
     def get_star_length(self):
     	return self.rating.get_rating()*25
@@ -32,11 +33,6 @@ class Video(models.Model):
     def get_tags(self):
 		return Tag.objects.get_for_object(self)
 	
-    def get_vid(self):
-        from datetime import datetime
-        dt_string = datetime.strftime(self.post_date, "%Y%m%d%H%M%S")
-        return dt_string[0:4] + "/" + dt_string[4:6] + "/" + dt_string[6:8] + "/" + dt_string[8:14]
-    vid = property(get_vid)
     def get_absolute_url(self):
         return '/video/%s' % self.vid
 

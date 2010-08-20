@@ -8,6 +8,31 @@
     <!-- start content -->
     {% if user.is_staff %}
     <div id="content">
+    	<div class="article">
+			<form action="" method="post">{% csrf_token %}
+	        	<p>
+					<label for="id_title">{{ form.title.label }} </label> {% if form.title.errors %} <span class="errors"> * {{ form.title.errors|join:", " }}</span> {% endif %} <br />
+					<input id="id_title" type="text" name="title" {% if form.title.data %} value={{ form.title.data }} {% endif %} size="45" maxlength="100" />
+				</p>
+				<p>
+					<label for="id_url">{{ form.url.label }} </label> {% if form.url.errors %} <span class="errors"> * {{ form.url.errors|join:", " }}</span> {% endif %} <br />
+					<input type="text" name="url" id="id_url" {% if form.url.data %} value={{ form.url.data }} {% endif %} size="45" />
+				</p>
+				<p>
+					<label for="id_tags">{{ form.tags.label }} </label> {% if form.tags.errors %} <span class="errors"> * {{ form.tags.errors|join:", " }}</span> {% endif %} <br />
+					<input id="id_tags" type="text" name="tags" {% if form.tags.data %} value={{ form.tags.data }} {% endif %} size="45" maxlength="100" />
+				</p>
+				<p>
+					<label for="id_category">{{ form.category.label }} </label> {% if form.category.errors %} <span class="errors"> * {{ form.category.errors|join:", " }}</span> {% endif %} <br />
+					<input id="id_category" type="text" name="category" {% if form.category.data %} value={{ form.category.data }} {% endif %} size="45" maxlength="100" />
+				</p>
+				<p>
+					<label for="id_intro">{{ form.intro.label }} </label> {% if form.intro.errors %} <span class="errors"> * {{ form.intro.errors|join:", " }}</span> {% endif %} <br />
+					{{ form.intro }}
+				</p>
+				<p class="submit"><input type="submit" value=" 确定 " /></p>
+	        </form>
+		</div>
         {% for video in object_list %}
             <div class="post">
                 <div class="title">

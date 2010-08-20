@@ -7,7 +7,7 @@ site_feeds = {
 
 urlpatterns = patterns('',
     (r'^$', 'youku.views.video_list_page'),
-    (r'^video/(\d{4})/(\d{2})/(\d{2})/(\d{6})/$', 'youku.views.video_page'),
+    (r'^video/(\d{4})-(\d{2})-(\d{2})-(\d{6})/$', 'youku.views.video_page'),
     (r'^log/$', 'youku.views.log_page'),
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^category/([^/]+)/$', 'youku.views.category_page'),
@@ -15,8 +15,10 @@ urlpatterns = patterns('',
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': site_feeds}),
     (r'^post/$', 'youku.views.post_video'),
     (r'^post/thanks/$', 'youku.views.post_thanks'),
-    (r'^super/posts$', 'youku.views.posted_videos'),
     (r'^suggestion/$', 'youku.views.suggestion'),
     (r'^suggestion/thanks/$', 'youku.views.suggestion_thanks'),
+    # Ajax
     (r'^ajax/rating/(?P<amnt>\d)/$', 'youku.views.rating'),
+	# Admin operations
+	(r'^super/posts/$', 'youku.views.posted_videos'),
 )
