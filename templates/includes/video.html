@@ -37,22 +37,22 @@ function vote(amnt, video_id){
 		<ul class='star-rating'>
 			<li class='current-rating' id='current-rating' style="width: {{ video.get_star_length }}px"></li>
 			<li><a href="#" onclick="vote(1, {{ video.id }}); return false;" 
-		           title='1 star out of 5' class='one-star'>1</a></li>
+		           title='很差' class='one-star'>1</a></li>
 			<li><a href="#" onclick="vote(2, {{ video.id }}); return false;" 
-		           title='2 star out of 5' class='two-stars'>2</a></li>
+		           title='较差' class='two-stars'>2</a></li>
 			<li><a href="#" onclick="vote(3, {{ video.id }}); return false;" 
-		           title='3 star out of 5' class='three-stars'>3</a></li>
+		           title='还行' class='three-stars'>3</a></li>
 			<li><a href="#" onclick="vote(4, {{ video.id }}); return false;" 
-		           title='4 star out of 5' class='four-stars'>4</a></li>
+		           title='推荐' class='four-stars'>4</a></li>
 			<li><a href="#" onclick="vote(5, {{ video.id }}); return false;" 
-		           title='5 star out of 5' class='five-stars'>5</a></li>
+		           title='力荐' class='five-stars'>5</a></li>
 		</ul>
 			{% if video.rating.votes %}
 			<div id='rating-stat' class='rating-stat'><strong style="color:red">{{ video.rating.get_rating|floatformat:"1" }}</strong> ({{ video.rating.votes }}人评价)</div>
 		{% else %}
 			<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
 		{% endif %}
-		<div id='current-rating-result' class='current-rating-result'></div> <!-- used to show "success" message after vote -->
+		<div id='current-rating-result' class='current-rating-result'></div> 
 		<div class='clear'></div>
 	</div>
 </div>
