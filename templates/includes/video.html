@@ -1,40 +1,40 @@
-<div id={{ video.id }}
-<div class="title">
-    <h2><a href="/video/{{video.vid}}/">{{ video.title }}</a></h2>
-    {% load comments %}
-    {% get_comment_count for video as comment_count %}
-    <p><small>{{ video.post_date }} by <a href="{{ video.posted_by.website }}">{{ video.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ video.get_category_display }}</a> {% if video.tags %} 标签:{% for tag in video.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{video.vid}}/">{{ comment_count }}</a>)</small></p>
-</div>
-<div class="entry">                
-    <embed src="{{ video.flash_url }}" quality="high" width="480" height="400" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>
-</div>
-<div class="intro">
-	{% if video.intro %}
-	<p><small>{{ video.intro|linebreaks }}</small></p>
-	{% endif %}
-</div>
-<div id="rating">
-	<ul class='star-rating'>
-		<li class='current-rating' id='current-rating' style="width: {{ video.get_star_length }}px"></li>
-		<li><a href="#" onclick="vote(1, {{ video.id }}); return false;" 
-	           title='1 star out of 5' class='one-star'>1</a></li>
-		<li><a href="#" onclick="vote(2, {{ video.id }}); return false;" 
-	           title='2 star out of 5' class='two-stars'>2</a></li>
-		<li><a href="#" onclick="vote(3, {{ video.id }}); return false;" 
-	           title='3 star out of 5' class='three-stars'>3</a></li>
-		<li><a href="#" onclick="vote(4, {{ video.id }}); return false;" 
-	           title='4 star out of 5' class='four-stars'>4</a></li>
-		<li><a href="#" onclick="vote(5, {{ video.id }}); return false;" 
-	           title='5 star out of 5' class='five-stars'>5</a></li>
-	</ul>
-		{% if video.rating.votes %}
-		<div id='rating-stat' class='rating-stat'><strong style="color:red">{{ video.rating.get_rating|floatformat:"1" }}</strong> ({{ video.rating.votes }}人评价)</div>
-	{% else %}
-		<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
-	{% endif %}
-	<div id='current-rating-result' class='current-rating-result'></div> <!-- used to show "success" message after vote -->
-	<div class='clear'></div>
-</div>
+<div id={{ video.id }}>
+	<div class="title">
+	    <h2><a href="/video/{{video.vid}}/">{{ video.title }}</a></h2>
+	    {% load comments %}
+	    {% get_comment_count for video as comment_count %}
+	    <p><small>{{ video.post_date }} by <a href="{{ video.posted_by.website }}">{{ video.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ video.get_category_display }}</a> {% if video.tags %} 标签:{% for tag in video.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{video.vid}}/">{{ comment_count }}</a>)</small></p>
+	</div>
+	<div class="entry">                
+	    <embed src="{{ video.flash_url }}" quality="high" width="480" height="400" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>
+	</div>
+	<div class="intro">
+		{% if video.intro %}
+		<p><small>{{ video.intro|linebreaks }}</small></p>
+		{% endif %}
+	</div>
+	<div id="rating">
+		<ul class='star-rating'>
+			<li class='current-rating' id='current-rating' style="width: {{ video.get_star_length }}px"></li>
+			<li><a href="#" onclick="vote(1, {{ video.id }}); return false;" 
+		           title='1 star out of 5' class='one-star'>1</a></li>
+			<li><a href="#" onclick="vote(2, {{ video.id }}); return false;" 
+		           title='2 star out of 5' class='two-stars'>2</a></li>
+			<li><a href="#" onclick="vote(3, {{ video.id }}); return false;" 
+		           title='3 star out of 5' class='three-stars'>3</a></li>
+			<li><a href="#" onclick="vote(4, {{ video.id }}); return false;" 
+		           title='4 star out of 5' class='four-stars'>4</a></li>
+			<li><a href="#" onclick="vote(5, {{ video.id }}); return false;" 
+		           title='5 star out of 5' class='five-stars'>5</a></li>
+		</ul>
+			{% if video.rating.votes %}
+			<div id='rating-stat' class='rating-stat'><strong style="color:red">{{ video.rating.get_rating|floatformat:"1" }}</strong> ({{ video.rating.votes }}人评价)</div>
+		{% else %}
+			<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
+		{% endif %}
+		<div id='current-rating-result' class='current-rating-result'></div> <!-- used to show "success" message after vote -->
+		<div class='clear'></div>
+	</div>
 </div>
 <script type="text/javascript">
 function vote(amnt, video_id){
