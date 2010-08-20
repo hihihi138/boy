@@ -33,7 +33,7 @@ function vote(amnt, video_id){
 		<p><small>{{ video.intro|linebreaks }}</small></p>
 		{% endif %}
 	</div>
-	<div id="rating">
+	<div id="rating" class="rating">
 		<ul class='star-rating'>
 			<li class='current-rating' id='current-rating' style="width: {{ video.get_star_length }}px"></li>
 			<li><a href="#" onclick="vote(1, {{ video.id }}); return false;" 
