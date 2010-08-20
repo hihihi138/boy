@@ -44,7 +44,7 @@ function vote(amnt, video_id){
 		data: {'video_id': video_id,},
 		dataType: "json",
 		success: function(data){
-			rating = data[0].fields.rating_score/data[0].fields.rating_votes;
+			rating = (data[0].fields.rating_score)/(data[0].fields.rating_votes);
 			rating = Math.round(rating*Math.pow(10,1))/Math.pow(10,1);
 			width = rating*25
 			html = "<strong style='color:red'>" + rating + "</strong> (" + data[0].fields.rating_votes + "人评价)"
