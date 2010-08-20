@@ -56,7 +56,7 @@ ul {
 #side_button {
 	left:0;
 	position:fixed;
-	top:30%;
+	bottom:50%;
 }
 
 #side_button a {

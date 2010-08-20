@@ -26,11 +26,6 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<!-- side button -->
-<div id="side_button">
-	<a href="/post/" class="postvideo"/>
-	<a href="/suggestion/" class="feedback" />
-</div>
 <!-- start header -->
 <div id="header">
 	<div id="headercenter">
@@ -75,7 +70,13 @@ $(document).ready(function(){
 </div>
 <!-- end header -->
 <!-- start page -->
-<div id="page"> 
+<div id="page">
+	<!-- side button -->
+	<div id="side_button">
+		<a href="/post/" class="postvideo"/>
+		<a href="/suggestion/" class="feedback" />
+	</div>
+	
     <!-- start content -->
     <div id="cse"></div>
     {% block content %}
@@ -91,7 +92,6 @@ $(document).ready(function(){
     {% block page_index %}
     {% endblock %}
     <!-- end page_index -->
-
 	<br style="clear: both;" />
 </div>
 <!-- end page -->
