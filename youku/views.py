@@ -50,6 +50,7 @@ def post_video(request):
 	return render_to_response('post_video.html', {'form': form}, context_instance=RequestContext(request))
 
 def posted_videos(request):
+	error = ''
 	if request.method == 'POST':
 		form = SubmitVideoForm(request.POST)
 		if form.is_valid():
@@ -57,13 +58,17 @@ def posted_videos(request):
 			import urllib, re
 			data = urllib.urlopen(cd['url']).read()
 			result = re.search('<embed src="([^"]+)"', data)
-			sv = Video(title=cd['title'], url=cd['url'], flash_url=result.group(1), posted_by=User.objects.get(username='muer'), post_date=datetime.now(), category=cd['category'], tags=cd['tags'], intro=cd['intro'],)
-			sv.save()
-			return HttpResponseRedirect('/super/posts/')
+			if result is None:
+				error = "请输入正确的优酷地址."
+			else:
+				sv = Video(title=cd['title'], url=cd['url'], flash_url=result.group(1), posted_by=User.objects.get(username='muer'), post_date=datetime.now(), category=cd['category'], tags=cd['tags'], intro=cd['intro'], slug=request.POST['slug'])
+				sv.save()
+				return HttpResponseRedirect('/super/posts/')
 	else:
 		form = SubmitVideoForm()
 	videos = PostedVideo.objects.all()
-	return object_list(request, template_name='posted_videos.html', queryset=videos, paginate_by=30, extra_context={'form': form},)
+	suggestions = Suggestion.objects.order_by("-time")[0:8]
+	return object_list(request, template_name='posted_videos.html', queryset=videos, paginate_by=30, extra_context={'form': form, 'error': error, 'suggestions':suggestions},)
 	
 def post_thanks(request):
 	return render_to_response('post_thanks.html')

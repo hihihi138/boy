@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from djangoratings.fields import RatingField
 
 class Video(models.Model):
-    title = models.CharField(max_length=100, verbose_name='题目')
+    title = models.CharField(max_length=100, verbose_name='视频名称')
     url = models.URLField(verbose_name='优酷网址')
     flash_url = models.URLField(verbose_name='Flash地址')
     posted_by = models.ForeignKey(User, verbose_name='发布人')
@@ -22,7 +22,7 @@ class Video(models.Model):
 	('other', '其它'),
     )
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, verbose_name='分类')
-    tags = TagField()
+    tags = TagField(verbose_name='标签')
     intro = models.TextField(max_length=4096, blank=True, verbose_name='视频简介')
     rating = RatingField(range=5, can_change_vote=False, allow_anonymous=True)
     slug = models.SlugField(max_length=40, default=datetime.now().strftime("%Y-%m-%d-%H%M%S"))
@@ -60,6 +60,9 @@ class PostedVideo(models.Model):
 	
 	def __unicode__(self):
 		return self.title
+		
+	class Meta:
+		ordering = ['-post_date']
 		
 class Suggestion(models.Model):
 	name = models.CharField(max_length=100, verbose_name='昵称')
