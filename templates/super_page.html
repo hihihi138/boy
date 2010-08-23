@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}优酷精选 - 管理员页面{% endblock %}
+{% block metaKeywordsTitle %}用户投递的视频{% endblock %}
+{% block metaKeywordsContent %}优酷,优酷精选,视频,视频分享,在线视频{% endblock %}
+{% block metaDescriptionContent %}用户投递的视频。{% endblock %}
+
+{% block content %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var d = new Date()
+			function checkTime(i){if(i<10){i="0"+i}return i}
+			slug = d.getFullYear()+'-'+checkTime(d.getMonth())+'-'+checkTime(d.getDate())+'-'+checkTime(d.getHours())+checkTime(d.getMinutes())+checkTime(d.getSeconds())
+			$('#id_slug:input').val(slug)
+		});
+	</script>
+    <!-- start content -->
+    {% if user.is_staff %}
+    <div id="content">
+    	<!-- Post Video -->
+    	<h3> 新建视频 </h3><br />
+    	<div class="article">
+			<form action="" method="post">{% csrf_token %}
+	        	<p>
+					<label for="id_title">{{ form.title.label }} </label> {% if form.title.errors %} <span class="errors"> * {{ form.title.errors|join:", " }}</span> {% endif %} <br />
+					<input id="id_title" type="text" name="title" {% if form.title.data %} value={{ form.title.data }} {% endif %} size="45" maxlength="100" />
+				</p>
+				<p>
+					<label for="id_url">{{ form.url.label }} </label> {% if form.url.errors %} <span class="errors"> * {{ form.url.errors|join:", " }}</span> {% endif %} {% if error %}<span class="errors">* {{ error }}</span>{% endif %} <br />
+					<input type="text" name="url" id="id_url" {% if form.url.data %} value={{ form.url.data }} {% endif %} size="45" />
+				</p>
+				<p>
+					<label for="id_tags">{{ form.tags.label }}(请用空格隔开多个标签) </label> {% if form.tags.errors %} <span class="errors"> * {{ form.tags.errors|join:", " }}</span> {% endif %} <br />
+					<input id="id_tags" type="text" name="tags" {% if form.tags.data %} value={{ form.tags.data }} {% endif %} size="45" maxlength="100" />
+				</p>
+				<p>
+					<label for="id_category">{{ form.category.label }} </label> {% if form.category.errors %} <span class="errors"> * {{ form.category.errors|join:", " }}</span> {% endif %} <br />
+					{{ form.category }}
+				</p>
+				<p>
+					<label for="id_intro">{{ form.intro.label }} </label> {% if form.intro.errors %} <span class="errors"> * {{ form.intro.errors|join:", " }}</span> {% endif %} <br />
+					{{ form.intro }}
+				</p>
+				<p>
+					<label for="id_slug">{{ form.slug.label }} </lable>{% if form.slug.errors %} <span class="errors"> * {{ form.slug.errors|join:", " }}</span> {% endif %} <br />
+					<input id="id_slug" type="text" name="slug" size="25" maxlength="100" />
+				</p>
+				<p id="submit" class="submit"><input type="submit" value=" 确定 " /></p>
+	        </form>
+		</div>
+		<!-- end Post Video -->
+		<!-- Posted Videos -->
+		<h3> 已投递的视频 </h3><br />
+        {% for video in object_list %}
+            <div class="article">
+            	{{ forloop.counter }}
+	            <ul>
+	            <li><h4>{{ video.title }}</h4></li>
+		        <li><span style="color: blue">标签: </span>{{ video.tags }}</li>
+		        <li><span style="color: blue">地址: </span><a href={{ video.url }}>{{ video.url }}</a></li>
+		        <li><span style="color: blue">视频看点: </span>{{ video.reason|linebreaks }}</li>
+		        <li><span style="color: blue">投递时间: </span>{{ video.post_date }}</li>
+	            </ul>
+            </div>
+        {% endfor %}
+        <!-- end Posted Videos -->
+    </div>
+    {% else %}
+    	<div id="content">
+	    	<div class="article">
+	    	<h3>管理员页面</h3>
+	    	<p>对不起, 您没有权限访问此页面.</p>
+	    	</div>
+    	</div>
+    {% endif %}
+    <!-- end content -->
+{% endblock %}
+
+{% block sidebar %}
+	<div id="sidebar">
+		<h3>用户意见</h3><br />
+        <div class="sidebar">
+				<ul>
+				{% load truncatehanzi %}
+				{% for suggestion in suggestions %}
+					<li><a href="/admin/youku/suggestion/">{{ suggestion.content|truncatehanzi:"15" }}</a></li>
+				{% endfor %}
+				</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block page_index %}
+{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+{% endblock %}
+

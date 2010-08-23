@@ -23,9 +23,9 @@
 		<div class="sidebar">
 			<h2>最新评论</h2>
 			<ul>
-				{% for comment in comments %}
 				{% load truncatehanzi %}
-                   <li><a href="/video/{{ comment.content_object.vid }}">{{ comment.comment|truncatehanzi:"15" }}</a></li>
+				{% for comment in comments %}
+                   <li><a href="/video/{{ comment.content_object.slug }}">{{ comment.comment|truncatehanzi:"15" }}</a></li>
             	{% endfor %}
 			</ul>
 		</div>

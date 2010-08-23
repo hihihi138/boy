@@ -15,7 +15,7 @@ class LatestVideosFeed(Feed):
 		return item.title
 		
 	def item_link(self, item):
-		return "/video/" + item.vid
+		return "/video/" + item.slug
 	
 	def item_pubdate(self, item):
 		return item.post_date

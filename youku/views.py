@@ -8,7 +8,7 @@ from django.views.generic.list_detail import object_list
 from django.template import RequestContext
 from django.contrib.comments.models import Comment
 from tagging.views import tagged_object_list
-from youku.forms import PostVideoForm, SuggestionForm
+from youku.forms import PostVideoForm, SuggestionForm, SubmitVideoForm
 
 def video_list_page(request):
     videos = Video.objects.all()
@@ -17,8 +17,8 @@ def video_list_page(request):
     return object_list(request, template_name = 'index.html', queryset = videos, paginate_by=5, extra_context={'comments': comments, 'categories': categories})
 
 def video_page(request, year, month, day, time):
-    dt = datetime.strptime(year+month+day+time, "%Y%m%d%H%M%S")
-    video = Video.objects.get(post_date=dt)
+    slug = year+'-'+month+'-'+day+'-'+time
+    video = Video.objects.get(slug=slug)
     return render_to_response('video_page.html', {'video': video}, context_instance=RequestContext(request))
 
 def category_page(request, category):
@@ -49,9 +49,26 @@ def post_video(request):
 		form = PostVideoForm()
 	return render_to_response('post_video.html', {'form': form}, context_instance=RequestContext(request))
 
-def posted_videos(request):
-    videos = PostedVideo.objects.all()
-    return object_list(request, template_name='posted_videos.html', queryset=videos, paginate_by=10)
+def super_page(request):
+	error = ''
+	if request.method == 'POST':
+		form = SubmitVideoForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			import urllib, re
+			data = urllib.urlopen(cd['url']).read()
+			result = re.search('<embed src="([^"]+)"', data)
+			if result is None:
+				error = "请输入正确的优酷地址."
+			else:
+				sv = Video(title=cd['title'], url=cd['url'], flash_url=result.group(1), posted_by=User.objects.get(username='muer'), post_date=datetime.now(), category=cd['category'], tags=cd['tags'], intro=cd['intro'], slug=request.POST['slug'])
+				sv.save()
+				return HttpResponseRedirect('/super/')
+	else:
+		form = SubmitVideoForm()
+	videos = PostedVideo.objects.all()
+	suggestions = Suggestion.objects.order_by("-time")[0:8]
+	return object_list(request, template_name='super_page.html', queryset=videos, paginate_by=30, extra_context={'form': form, 'error': error, 'suggestions':suggestions},)
 	
 def post_thanks(request):
 	return render_to_response('post_thanks.html')

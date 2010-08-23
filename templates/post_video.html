@@ -18,7 +18,7 @@
 				<input type="text" name="url" id="id_url" {% if form.url.data %} value={{ form.url.data }} {% endif %} size="45" />
 			</p>
 			<p>
-				<label for="id_tags">{{ form.tags.label }} </label> {% if form.tags.errors %} <span class="errors"> * {{ form.tags.errors|join:", " }}</span> {% endif %} <br />
+				<label for="id_tags">{{ form.tags.label }}(请用空格隔开多个标签) </label> {% if form.tags.errors %} <span class="errors"> * {{ form.tags.errors|join:", " }}</span> {% endif %} <br />
 				<input id="id_tags" type="text" name="tags" {% if form.tags.data %} value={{ form.tags.data }} {% endif %} size="45" maxlength="100" />
 			</p>
 			<p>
