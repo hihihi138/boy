@@ -474,12 +474,10 @@ input.gsc-search-button {
 	padding: 5px 0 0 6px;
 }
 #current-rating-result{
-	//background-color:#FFFFCC;
 	color:#FF3300;
 	float:left;
 	font-size:12px;
 	margin:5px 0 0 15px;
-	//padding:2px 10px;
 }
 .star-rating{
 	list-style:none;
@@ -495,9 +493,7 @@ input.gsc-search-button {
 .star-rating li{
 	padding:0px;
 	margin:0px;
-	/*\*/
 	float: left;
-	/* */
 }
 .star-rating li a{
 	display:block;
