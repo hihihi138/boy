@@ -49,7 +49,7 @@ def post_video(request):
 		form = PostVideoForm()
 	return render_to_response('post_video.html', {'form': form}, context_instance=RequestContext(request))
 
-def posted_videos(request):
+def super_page(request):
 	error = ''
 	if request.method == 'POST':
 		form = SubmitVideoForm(request.POST)
@@ -63,12 +63,12 @@ def posted_videos(request):
 			else:
 				sv = Video(title=cd['title'], url=cd['url'], flash_url=result.group(1), posted_by=User.objects.get(username='muer'), post_date=datetime.now(), category=cd['category'], tags=cd['tags'], intro=cd['intro'], slug=request.POST['slug'])
 				sv.save()
-				return HttpResponseRedirect('/super/posts/')
+				return HttpResponseRedirect('/super/')
 	else:
 		form = SubmitVideoForm()
 	videos = PostedVideo.objects.all()
 	suggestions = Suggestion.objects.order_by("-time")[0:8]
-	return object_list(request, template_name='posted_videos.html', queryset=videos, paginate_by=30, extra_context={'form': form, 'error': error, 'suggestions':suggestions},)
+	return object_list(request, template_name='super_page.html', queryset=videos, paginate_by=30, extra_context={'form': form, 'error': error, 'suggestions':suggestions},)
 	
 def post_thanks(request):
 	return render_to_response('post_thanks.html')

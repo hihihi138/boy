@@ -19,8 +19,3 @@ class SubmitVideoForm(ModelForm):
 	class Meta:
 		model = Video
 		fields = ('title', 'url', 'tags', 'category', 'intro', 'slug')
-	#title = forms.CharField(max_length=100, label='视频名称')
-	#url = forms.URLField(label='优酷地址')
-	#tags = forms.CharField(max_length=100, label='标签')
-	#category = forms.CharField(max_length=100, label='分类')
-	#intro = forms.CharField(widget=forms.Textarea, required=False, label='视频简介')
