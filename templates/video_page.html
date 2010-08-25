@@ -71,11 +71,10 @@
 						var user = $('#id_name').val();
 						var email = $('#id_email').val();
 						var comment = $('#id_comment').val();
-						var chtml = '<div class="comment"><small><b style="color: #1692B8">'+user+'</b> 刚刚在'+(n+1)+'楼说:</small><div class="comment_container"><div class="avatar"><img src={% gravatar_url '+email+' %}></div><div class="comment_content"><p>'+comment+'</p></div><div class="clear"></div></div></div>';
+						var chtml = '<div class="comment" style="background-color:#FFFFCC"><small><b style="color: #1692B8">'+user+'</b> 刚刚在'+(n+1)+'楼说:</small><div class="comment_container"><div class="avatar"><img src={% gravatar_url '+email+' %}></div><div class="comment_content"><p>'+comment+'</p></div><div class="clear"></div></div></div>';
 						$('#comment_container').append(chtml);
 						$('#comment h3').replaceWith('<h3>已经有'+(n+1)+'条评论了.</h3>');
-		            	$('#comment form').replaceWith('<h4 style="color:red">评论添加成功</h4>');
-		            	$('#comment h4').fadeOut(5000);
+		            	$('#comment form').fadeOut(3000);
 	            	}
 	                bindPostCommentHandler();
 	            },
