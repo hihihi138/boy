@@ -38,6 +38,10 @@ h3 {
 	font-size: 1.3em;
 }
 
+h4 {
+	letter-spacing: -1px;
+}
+
 a {
 	color: #1692B8;
 	text-decoration: none;
@@ -284,13 +288,16 @@ input.gsc-search-button {
 	padding: 5px;
 	background-color: #F3FBFE;
 }
-#comment h3 {
+#comment h3,h4 {
 	padding: 0 20px 10px 20px;
 }
 .comment small {
 	padding: 5px;
 	margin: 0;
 	color: #A0A0A0;
+}
+#comment_container {
+	margin: 0 0 20px 0;
 }
 #post_comment {
 	margin: 10px 20px 20px 20px;
