@@ -1,0 +1,79 @@
+<div id="comment">
+    {% load comments %}
+    {% get_comment_list for video as comment_list %}
+    {% get_comment_count for video as comment_count %}
+    {% get_comment_form for video as form %}
+    {% if comment_count %}
+    	<h3>已经有{{ comment_count }}条评论了.</h3>
+    {% else %}
+    	<h3>还没有任何评论</h3>
+    {% endif %}
+    <div id="comment_container">
+    {% for comment in comment_list %}
+	    <div class="comment">
+	       	{% load timezone %}
+	        <small>
+	        {% if user.url %}
+	        	<a href="#">{{ comment.user_name }}</a>
+	        {% else %}
+	        	<b style="color: #1692B8">{{ comment.user_name }}</b>
+	        {% endif %}
+	        于 {{ comment.submit_date|date:"Y-m-d H:i:s" }} 在{{ forloop.counter }}楼说:
+	        </small>
+			<div class="comment_container">
+				<div class="avatar">
+		        	{% load gravatar %}
+	        		<img src={% gravatar_url comment.user_email %}>
+	        	</div>
+	        	<div class="comment_content">
+			        {{ comment.comment|linebreaks }}
+				</div>
+				<div class="clear"></div>
+			</div>
+	    </div>
+    {% endfor %}
+    </div>
+    {% include "comments/preview.html" %}
+</div>
+
+{% block javascript %}
+<script type="text/javascript" charset="utf-8">
+function bindPostCommentHandler() {
+    $('#post_comment').submit(function() {
+        $.ajax({
+            type: "POST",
+            data: $('#post_comment').serialize(),
+            url: "{% comment_form_target %}",
+            cache: false,
+            dataType: "html",
+            success: function(html, textStatus) {
+            	if (html.match('post_comment'))
+            	{
+            		$('#post_comment').replaceWith(html);
+            	}
+            	else
+            	{
+	            	var n = $('.comment').size();
+					var user = $('#id_name').val();
+					var email = $('#id_email').val();
+					var comment = $('#id_comment').val();
+					var chtml = '<div class="comment" style="background-color:#FFFFCC"><small><b style="color: #1692B8">'+user+'</b> 刚刚在'+(n+1)+'楼说:</small><div class="comment_container"><div class="avatar"><img src={% gravatar_url '+email+' %}></div><div class="comment_content"><p>'+comment+'</p></div><div class="clear"></div></div></div>';
+					$('#comment_container').append(chtml);
+					$('#comment h3').replaceWith('<h3>已经有'+(n+1)+'条评论了.</h3>');
+	            	$('#post_comment').hide();
+            	}
+                bindPostCommentHandler();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#post_comment').replaceWith('<p>抱歉!服务器开小差了,您的评论暂时无法发表,请稍后再试.</p>');
+            }
+        });
+        return false;
+    });
+}
+
+$(document).ready(function() {
+    bindPostCommentHandler();
+});
+</script>
+{% endblock %}

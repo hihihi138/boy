@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     # Ajax
     (r'^ajax/rating/(?P<amnt>\d)/$', 'youku.views.rating'),
     (r'^ajax/post/$', 'youku.views.super_page'),
+    (r'^ajax/comment/(?P<vid>\d+)/$', 'youku.views.comment'),
 	# Admin operations
 	(r'^super/$', 'youku.views.super_page'),
 )

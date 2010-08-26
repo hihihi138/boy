@@ -99,3 +99,9 @@ def rating(request, amnt):
 		return HttpResponse(data,mimetype)
 	else:
 		return HttpResponse(status=400)
+		
+def comment(request, vid):
+	video = Video.objects.get(id=vid)
+	user = request.user
+	return render_to_response('includes/comment.html', {'video': video, 'user': user})
+		

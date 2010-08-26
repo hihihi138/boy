@@ -23,7 +23,7 @@ function vote(amnt, video_id){
 	    <h2><a href="/video/{{video.slug}}/">{{ video.title }}</a></h2>
 	    {% load comments %}
 	    {% get_comment_count for video as comment_count %}
-	    <p><small>{{ video.post_date|date:"Y年m月d日 H:i:s" }} by <a href="{{ video.posted_by.website }}">{{ video.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ video.get_category_display }}</a> {% if video.tags %} 标签:{% for tag in video.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{video.slug}}/">{{ comment_count }}</a>)</small></p>
+	    <p><small>{{ video.post_date|date:"Y年m月d日 H:i:s" }} by <a href="{{ video.posted_by.website }}">{{ video.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ video.get_category_display }}</a> {% if video.tags %} 标签:{% for tag in video.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %}评论(<a style="color:#1692B8"  href="/video/{{video.slug}}/">{{ comment_count }}</a>)</small></p>
 	</div>
 	<div class="entry">                
 	    <embed src="{{ video.flash_url }}" quality="high" width="480" height="400" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>
@@ -52,7 +52,29 @@ function vote(amnt, video_id){
 		{% else %}
 			<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
 		{% endif %}
-		<div id='current-rating-result' class='current-rating-result'></div> 
+		<div id='current-rating-result' class='current-rating-result'></div>
+		{% load comments %}
+		{% get_comment_form for video as form %}
+		<div class='ajax_comment_button'><a href="#" onclick="ajax_comment({{ video.id }}); return false;">查看评论↓</a></div>
 		<div class='clear'></div>
 	</div>
 </div>
+
+<script type='text/javascript'>
+function ajax_comment(vid) {
+	$('#'+vid+' .ajax_comment_button').replaceWith('<div class="ajax_comment_button"><a href="#" onclick="ajax_comment_dismiss('+vid+'); return false;">隐藏评论↑</a></div>');
+	$.get('/ajax/comment/'+vid+'/', function(data) {
+		$('#'+vid).append('<div class="ajax_comment">'+data+'</div>');
+	});
+}
+
+function ajax_comment_dismiss(vid) {
+	$('#'+vid+' .ajax_comment').hide();
+	$('#'+vid+' .ajax_comment_button').replaceWith('<div class="ajax_comment_button"><a href="#" onclick="ajax_comment_show('+vid+'); return false;">查看评论↓</a></div>');
+}
+
+function ajax_comment_show(vid) {
+	$('#'+vid+' .ajax_comment').show();
+	$('#'+vid+' .ajax_comment_button').replaceWith('<div class="ajax_comment_button"><a href="#" onclick="ajax_comment_dismiss('+vid+'); return false;">隐藏评论↑</a></div>');
+}
+</script>

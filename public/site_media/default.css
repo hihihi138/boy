@@ -238,7 +238,7 @@ input.gsc-search-button {
 }
 
 .post .title {
-	font-family: 'Microsoft YaHei', 微软雅黑, 'Microsoft JhengHei', 华文黑体, STHeiti, Georgia, 'Times New Roman', Times, serif;
+	padding:0 0 0 10px;
 }
 
 .post .title h2 {
@@ -259,7 +259,7 @@ input.gsc-search-button {
 }
 
 .post .entry {
-	padding: 0 0 20px 20px;
+	padding: 0 0 20px 40px;
 	font-size:0.9em;
 }
 .post .log_entry{
@@ -274,22 +274,15 @@ input.gsc-search-button {
 
 /* Comment */
 #comment {
-    width: 610px;
-  	float: left;
- 	margin: 0 0 20px 20px;
- 	padding: 15px 0 0 0;
-	-moz-box-shadow: #33bbed 0 0 10px;
-	-webkit-box-shadow: #33bbed 0 0 10px;
-	border:1px solid #33BBED;
-	background-color: #DAF3FC;
+ 	margin: 0 0 10px 0;
 }
 .comment {
-	margin: 0 20px 5px 20px;
+	margin: 0 30px 5px 30px;
 	padding: 5px;
 	background-color: #F3FBFE;
 }
 #comment h3,h4 {
-	padding: 0 20px 10px 20px;
+	padding: 0 20px 10px 30px;
 }
 .comment small {
 	padding: 5px;
@@ -297,7 +290,7 @@ input.gsc-search-button {
 	color: #A0A0A0;
 }
 #comment_container {
-	margin: 0 0 20px 0;
+	margin: 0 10px 20px 0;
 }
 #post_comment {
 	margin: 10px 20px 20px 20px;
@@ -317,6 +310,22 @@ input.gsc-search-button {
 .comment_content p {
 	margin: 10px 0;
 	padding: 0;
+}
+#comment .submit-post{
+	background-color:#78BEE0;
+	color:#DAF3FC;
+	font-size:1em;
+	padding:3px 20px;
+}
+.ajax_comment_button a {
+	float:right;
+	margin-right:120px;
+	color:#DAF3FC;
+	background-color:#78BEE0;
+	padding:2px 5px;
+}
+.ajax_comment_button a:hover {
+	background-color:#3399cc;
 }
 .clear {
 	clear: both;
@@ -474,6 +483,7 @@ input.gsc-search-button {
 
 /* rating */
 #rating{
+	padding:0 0 0 20px;
 }
 #rating-stat{
 	font-size: 13px;

@@ -34,7 +34,7 @@ class Video(models.Model):
 		return Tag.objects.get_for_object(self)
 	
     def get_absolute_url(self):
-        return '/video/%s' % self.vid
+        return '/video/%s' % self.slug
 
     def __unicode__(self):
         return self.title
