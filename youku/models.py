@@ -24,7 +24,7 @@ class Video(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, verbose_name='分类')
     tags = TagField(verbose_name='标签')
     intro = models.TextField(max_length=4096, blank=True, verbose_name='视频简介')
-    rating = RatingField(range=5, can_change_vote=False, allow_anonymous=True)
+    rating = RatingField(range=5, can_change_vote=True, allow_anonymous=True)
     slug = models.SlugField(max_length=40, default=datetime.now().strftime("%Y-%m-%d-%H%M%S"))
     
     def get_star_length(self):

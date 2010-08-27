@@ -11,8 +11,8 @@ function vote(amnt, video_id){
 			var width = rating*25
 			var html = "<strong style='color:red'>" + rating + "</strong> (" + data[0].fields.rating_votes + "人评价)"
 			$('#'+video_id+' .current-rating').width(width + "px");
-			$('#'+video_id+' .current-rating-result').html("投票已成功!").fadeOut(5000);
-			$('#'+video_id+' .rating-stat').html(html)
+			$('#'+video_id+' .current-rating-result').html("投票已成功!").animate({top:'-=20'},'slow').fadeOut(5000);
+			$('#'+video_id+' .rating-stat').html(html);
 		}
 	});
 }
@@ -54,12 +54,21 @@ function vote(amnt, video_id){
 			<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
 		{% endif %}
 		<div id='current-rating-result' class='current-rating-result'></div>
+		<div id="addthis_toolbox" class="addthis_toolbox addthis_default_style" addthis:url="http://www.bestyouku.com/video/{{ video.slug }}/" addthis:title="{{ video.title }}" addthis:description="{{ video.intro }}">
+			<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=hihihi138" class="addthis_button_compact">分享</a>
+			<a class="addthis_button_share.renren.com"></a>
+			<a class="addthis_button_douban"></a>
+			<a class="addthis_button_qzone"></a>
+			<a class="addthis_button_www.kaixin001.com"></a>
+			<a class="addthis_button_email"></a>
+		</div>
 		{% load comments %}
 		{% get_comment_form for video as form %}
 		<div class='ajax_comment_button'><a href="#" onclick="ajax_comment({{ video.id }}); return false;">查看评论↓</a></div>
 		<div class='clear'></div>
 	</div>
 </div>
+
 
 <script type='text/javascript'>
 function ajax_comment(vid) {
@@ -78,4 +87,31 @@ function ajax_comment_show(vid) {
 	$('#'+vid+' .ajax_comment').show();
 	$('#'+vid+' .ajax_comment_button').replaceWith('<div class="ajax_comment_button"><a href="#" onclick="ajax_comment_dismiss('+vid+'); return false;">隐藏评论↑</a></div>');
 }
+</script>
+<script type="text/javascript">
+	var addthis_config = {
+		'data_track_clickback':true,
+		username:"hihihi138",
+		//services_compact:'share.renren.com,douban,qzone,facebook,windows,baidu,gmail,googlebuzz,googlereader,igoogle,twitter,email,favorites,more,',
+		ui_cobrand: '优酷精选',
+		ui_header_color: '#D7F3FF',
+		ui_header_background: '#3399cc',
+		ui_delay: 200,
+		ui_language: 'zh',
+		data_ga_tracker: _gaq,
+		services_custom: [
+		{
+			name: '人人网',
+			url: 'http://share.renren.com/share/buttonshare.do?link=http://www.bestyouku.com/video/{{ video.slug }}/&title={{ video.title }}',
+			icon: 'http://a.xnimg.cn/favicon-rr.ico?ver=2'
+		},
+		{
+			name: '开心网',
+			url: 'http://www.kaixin001.com/repaste/bshare.php?rtitle={{ video.title }}&rurl=http://www.kaixin001.com/!repaste/repaste.php&from=http://www.bestyouku.com/video/{{ video.slug }}/',
+			icon: 'http://www.kaixin001.com/favicon.ico'
+		}]
+	};
+	var addthis_localize = {
+		share_caption: '和朋友一起分享精彩',
+	};
 </script>
