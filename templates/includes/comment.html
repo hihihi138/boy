@@ -18,7 +18,7 @@
 	        {% else %}
 	        	<b style="color: #1692B8">{{ comment.user_name }}</b>
 	        {% endif %}
-	        于 {{ comment.submit_date|date:"Y-m-d H:i:s" }} 在{{ forloop.counter }}楼说:
+	        于 {{ comment.submit_date|timezone:8|date:"Y-m-d H:i:s" }} 在{{ forloop.counter }}楼说:
 	        </small>
 			<div class="comment_container">
 				<div class="avatar">

@@ -59,7 +59,8 @@
 		        <li><span style="color: blue">标签: </span>{{ video.tags }}</li>
 		        <li><span style="color: blue">地址: </span><a href={{ video.url }}>{{ video.url }}</a></li>
 		        <li><span style="color: blue">视频看点: </span>{{ video.reason|linebreaks }}</li>
-		        <li><span style="color: blue">投递时间: </span>{{ video.post_date }}</li>
+		        {% load timezone %}
+		        <li><span style="color: blue">投递时间: </span>{{ video.post_date|timezone:8 }}</li>
 	            </ul>
             </div>
         {% endfor %}

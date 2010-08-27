@@ -13,7 +13,8 @@
             <div class="post">
                 <div class="title">
                     <h2>{{ log.log_title }}</a></h2>
-                    <p><small>发布时间 {{ log.log_time }}</small></p>
+                    {% load timezone %}
+                    <p><small>发布时间 {{ log.log_time|timezone:8 }}</small></p>
                 </div>
                 <div class="log_entry">                
                    {{ log.log_content|linebreaks }}
