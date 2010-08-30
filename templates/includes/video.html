@@ -118,7 +118,7 @@ function ajax_comment_show(vid) {
 		},
 		{
 			name: '开心网',
-			url: 'http://www.kaixin001.com/repaste/bshare.php?rtitle={% templatetag openvariable %}title{% templatetag closevariable %}&rurl=http://www.kaixin001.com/!repaste/repaste.php&from={% templatetag openvariable %}url{% templatetag closevariable %}',
+			url: 'http://www.kaixin001.com/repaste/bshare.php?rtitle={% templatetag openvariable %}title{% templatetag closevariable %}&rurl={% templatetag openvariable %}url{% templatetag closevariable %}&rcontent={% templatetag openvariable %}description{% templatetag closevariable %}',
 			icon: 'http://www.kaixin001.com/favicon.ico',
 		},]
 	};
