@@ -13,8 +13,8 @@
 	    <div class="comment">
 	       	{% load timezone %}
 	        <small>
-	        {% if user.url %}
-	        	<a href="#">{{ comment.user_name }}</a>
+	        {% if comment.user_url %}
+	        	<a href="{{ comment.user_url }}" style="text-shadow:#0000ff 1px 1px 3px;">{{ comment.user_name }}</a>
 	        {% else %}
 	        	<b style="color: #1692B8">{{ comment.user_name }}</b>
 	        {% endif %}

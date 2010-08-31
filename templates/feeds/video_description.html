@@ -4,4 +4,4 @@
 
 {% load comments %}
     {% get_comment_count for obj as comment_count %}
-    <p><small>by <a href="{{ video.posted_by.website }}">{{ obj.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ obj.get_category_display }}</a> {% if obj.tags %} 标签:{% for tag in obj.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{obj.vid}}/">{{ comment_count }}</a>)</small></p>
+    <p><small>by <a href="{{ video.posted_by.website }}">{{ obj.posted_by }}</a> 分类:<a href="/category/{{ video.category }}/">{{ obj.get_category_display }}</a> {% if obj.tags %} 标签:{% for tag in obj.tags.split %}<a href="/tag/{{ tag }}/">{{ tag }}</a>&nbsp;{% endfor %}{% endif %} 评论(<a style="color:#1692B8"  href="/video/{{ obj.slug }}/">{{ comment_count }}</a>)</small></p>
