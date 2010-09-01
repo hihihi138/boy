@@ -9,6 +9,7 @@
     	<h3>还没有任何评论</h3>
     {% endif %}
     <div id="comment_container">
+    {% load gravatar %}
     {% for comment in comment_list %}
 	    <div class="comment">
 	       	{% load timezone %}
@@ -22,7 +23,6 @@
 	        </small>
 			<div class="comment_container">
 				<div class="avatar">
-		        	{% load gravatar %}
 	        		<img src={% gravatar_url comment.user_email %}>
 	        	</div>
 	        	<div class="comment_content">

@@ -1,10 +1,13 @@
 # -*-coding:utf-8 -*-
+from __future__ import division
 from django.db import models
 from datetime import datetime
 from tagging.fields import TagField
 from tagging.models import Tag
 from django.contrib.auth.models import User
 from djangoratings.fields import RatingField
+from djangoratings.models import Vote
+from django.conf import settings
 
 class Video(models.Model):
     title = models.CharField(max_length=100, verbose_name='视频名称')
@@ -24,12 +27,20 @@ class Video(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, verbose_name='分类')
     tags = TagField(verbose_name='标签')
     intro = models.TextField(max_length=4096, blank=True, verbose_name='视频简介')
-    rating = RatingField(range=5, can_change_vote=True, allow_anonymous=True)
+    rating = RatingField(range=5, weight=0, can_change_vote=True, allow_anonymous=True)
     slug = models.SlugField(max_length=40, default=datetime.now().strftime("%Y-%m-%d-%H%M%S"))
     
     def get_star_length(self):
     	return self.rating.get_rating()*25
-
+    	
+    def get_weighted_rating(self):
+    	all_votes = Vote.objects.count()
+    	average_rating = self.rating.get_rating()
+    	minimum_votes = settings.MINIMUM_VOTES_FOR_TOPLIST
+    	mean_vote = settings.MEAN_VOTE_FOR_TOPLIST
+    	weighted_rating = (all_votes/(all_votes+minimum_votes))*average_rating+(minimum_votes/(all_votes+minimum_votes))*mean_vote
+    	return weighted_rating
+    
     def get_tags(self):
 		return Tag.objects.get_for_object(self)
 	

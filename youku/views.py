@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.contrib.comments.models import Comment
 from tagging.views import tagged_object_list
 from youku.forms import PostVideoForm, SuggestionForm, SubmitVideoForm
+from django.conf import settings
 
 def video_list_page(request):
     videos = Video.objects.all()
@@ -59,7 +60,7 @@ def super_page(request):
 			data = urllib.urlopen(cd['url']).read()
 			result = re.search('<embed src="([^"]+)"', data)
 			if result is None:
-				error = "请输入正确的优酷地址."
+				error = "ËØ∑ËæìÂÖ•Ê≠£Á°ÆÁöÑ‰ºòÈÖ∑Âú∞ÂùÄ."
 			else:
 				sv = Video(title=cd['title'], url=cd['url'], flash_url=result.group(1), posted_by=User.objects.get(username='muer'), post_date=datetime.now(), category=cd['category'], tags=cd['tags'], intro=cd['intro'], slug=request.POST['slug'])
 				sv.save()
@@ -99,9 +100,22 @@ def rating(request, amnt):
 		return HttpResponse(data,mimetype)
 	else:
 		return HttpResponse(status=400)
-		
+
 def comment(request, vid):
 	video = Video.objects.get(id=vid)
 	user = request.user
 	return render_to_response('includes/comment.html', {'video': video, 'user': user})
-		
+    
+def toplist(request, type):
+	if type == '':
+		q = Video.objects.extra(select={'w_rating': 'rating_votes*100/(rating_votes+%s)*100/%s*rating_score/rating_votes/100+%s*100/(rating_votes+%s)*%s/100' % (settings.MINIMUM_VOTES_FOR_TOPLIST, Video.rating.range, settings.MINIMUM_VOTES_FOR_TOPLIST, settings.MINIMUM_VOTES_FOR_TOPLIST, settings.MEAN_VOTE_FOR_TOPLIST)})
+		q = q.extra(order_by = ['-w_rating'])
+		return object_list(request, template_name = 'index.html', queryset = q, paginate_by=5,)
+	elif type == 'rating':
+		q = Video.objects.extra(select={'a_rating': 'rating_score*100/%s/rating_votes' % (Video.rating.range)})
+		q = q.extra(order_by = ['-a_rating'])
+		return object_list(request, template_name = 'index.html', queryset = q, paginate_by=5,)
+	elif type == 'votes':
+		q = Video.objects.order_by('-rating_votes')
+		return object_list(request, template_name = 'index.html', queryset = q, paginate_by=5,)
+	raise Http404
