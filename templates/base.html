@@ -40,7 +40,7 @@ This is the base template.
 		<div id="menu">
 			<ul>
 	            {% block menuMainPage %}<li><a href="/">主页</a></li>{% endblock %}
-	            {% block menuTopList %}<li><a href="/toplist/">视频排行</a></li>{% endblock %}
+	            {% block menuTopList %}<li><a href="/toplist/default/">视频排行</a></li>{% endblock %}
 	            {% block menuPostVideo %}<li><a href="/post/">投递视频</a></li>{% endblock %}
 	            {% block menuAboutUs %}<li><a href="/log/">关于本站</a></li>{% endblock %}
 	            {% if user.is_staff %}<li><a href="/super/", style="color:#33BBED">管理员</a></li>{% endif %}

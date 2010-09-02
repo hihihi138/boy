@@ -107,15 +107,21 @@ def comment(request, vid):
 	return render_to_response('includes/comment.html', {'video': video, 'user': user})
     
 def toplist(request, type):
-	if type == '':
+	comments = Comment.objects.order_by("-submit_date")[0:6]
+	categories = Video.CATEGORY_CHOICES
+	if type == 'default':
 		q = Video.objects.extra(select={'w_rating': 'rating_votes*100/(rating_votes+%s)*100/%s*rating_score/rating_votes/100+%s*100/(rating_votes+%s)*%s/100' % (settings.MINIMUM_VOTES_FOR_TOPLIST, Video.rating.range, settings.MINIMUM_VOTES_FOR_TOPLIST, settings.MINIMUM_VOTES_FOR_TOPLIST, settings.MEAN_VOTE_FOR_TOPLIST)})
-		q = q.extra(order_by = ['-w_rating'])
-		return object_list(request, template_name = 'index.html', queryset = q, paginate_by=5,)
+		q = q.extra(order_by = ['-w_rating', '-rating_votes'])
+		list = 'default'
+		return object_list(request, template_name = 'toplist.html', queryset = q, paginate_by=5, extra_context={'comments': comments, 'categories': categories, 'list': list,})
 	elif type == 'rating':
 		q = Video.objects.extra(select={'a_rating': 'rating_score*100/%s/rating_votes' % (Video.rating.range)})
-		q = q.extra(order_by = ['-a_rating'])
-		return object_list(request, template_name = 'index.html', queryset = q, paginate_by=5,)
+		q = q.extra(order_by = ['-a_rating', '-rating_votes'])
+		list = 'rating'
+		return object_list(request, template_name = 'toplist.html', queryset = q, paginate_by=5, extra_context={'comments': comments, 'categories': categories, 'list': list,})
 	elif type == 'votes':
-		q = Video.objects.order_by('-rating_votes')
-		return object_list(request, template_name = 'index.html', queryset = q, paginate_by=5,)
+		q = Video.objects.extra(select={'a_rating': 'rating_score*100/%s/rating_votes' % (Video.rating.range)})
+		q = q.extra(order_by = ['-rating_votes', '-a_rating'])
+		list = 'votes'
+		return object_list(request, template_name = 'toplist.html', queryset = q, paginate_by=5, extra_context={'comments': comments, 'categories': categories, 'list': list,})
 	raise Http404

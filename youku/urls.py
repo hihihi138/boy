@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     (r'^post/thanks/$', 'youku.views.post_thanks'),
     (r'^suggestion/$', 'youku.views.suggestion'),
     (r'^suggestion/thanks/$', 'youku.views.suggestion_thanks'),
-    (r'^toplist/(?P<type>.*)$', 'youku.views.toplist'),
+    (r'^toplist/(?P<type>.*)/$', 'youku.views.toplist'),
     # Ajax
     (r'^ajax/rating/(?P<amnt>\d)/$', 'youku.views.rating'),
     (r'^ajax/post/$', 'youku.views.super_page'),

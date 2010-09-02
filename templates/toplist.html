@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block menuMainPage %}<li><a href="/">主页</a></li>{% endblock %}
+
+{% block menuTopList %}<li class="current_page_item"><a href="#">视频排行</a></li>{% endblock %}
+
+{% block banner %}
+	<div id="toplist_button">
+		<li {% ifequal list 'default' %}style="background-color:#3399CC;"{% endifequal %}><a href="/toplist/default/">综合排名</a></li>
+		<li {% ifequal list 'rating' %}style="background-color:#3399CC;"{% endifequal %}><a href="/toplist/rating/">按平均分</a></li>
+		<li {% ifequal list 'votes' %}style="background-color:#3399CC;"{% endifequal %}><a href="/toplist/votes/">按投票数</a></li>
+	</div>
+{% endblock %}

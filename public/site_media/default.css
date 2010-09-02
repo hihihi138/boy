@@ -227,6 +227,7 @@ input.gsc-search-button {
 
 #authentication {
 	float: right;
+	margin-top:3px;
 }
 
 .post {
@@ -327,6 +328,24 @@ input.gsc-search-button {
 .ajax_comment_button a:hover {
 	background-color:#3399cc;
 }
+
+#toplist_button {
+	margin:-10px 20px 40px 18px;
+}
+#toplist_button li {
+	float:left;
+	margin:0 5px 0 0;
+	background-color:#78BEE0;
+	padding:3px 10px;
+	list-style:none outside none;
+}
+#toplist_button li:hover {
+	background-color: #3399CC;
+}
+#toplist_button a {
+	color: #DAF3FC
+}
+
 .clear {
 	clear: both;
 }
