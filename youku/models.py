@@ -32,14 +32,6 @@ class Video(models.Model):
     
     def get_star_length(self):
     	return self.rating.get_rating()*25
-    	
-    def get_weighted_rating(self):
-    	all_votes = Vote.objects.count()
-    	average_rating = self.rating.get_rating()
-    	minimum_votes = settings.MINIMUM_VOTES_FOR_TOPLIST
-    	mean_vote = settings.MEAN_VOTE_FOR_TOPLIST
-    	weighted_rating = (all_votes/(all_votes+minimum_votes))*average_rating+(minimum_votes/(all_votes+minimum_votes))*mean_vote
-    	return weighted_rating
     
     def get_tags(self):
 		return Tag.objects.get_for_object(self)

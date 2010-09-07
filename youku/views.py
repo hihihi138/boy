@@ -11,11 +11,17 @@ from tagging.views import tagged_object_list
 from youku.forms import PostVideoForm, SuggestionForm, SubmitVideoForm
 from django.conf import settings
 
+def video_list(request, videos, **kwargs):
+	comments = Comment.objects.order_by("-submit_date")[0:6]
+	categories = Video.CATEGORY_CHOICES
+	extra_context = {'comments': comments, 'categories': categories}
+	for c in kwargs:
+		extra_context[c] = kwargs[c]
+	return object_list(request, template_name = 'index.html', queryset = videos, paginate_by=5, extra_context=extra_context)
+
 def video_list_page(request):
     videos = Video.objects.all()
-    comments = Comment.objects.order_by("-submit_date")[0:6]
-    categories = Video.CATEGORY_CHOICES
-    return object_list(request, template_name = 'index.html', queryset = videos, paginate_by=5, extra_context={'comments': comments, 'categories': categories})
+    return video_list(request, videos)
 
 def video_page(request, year, month, day, time):
     slug = year+'-'+month+'-'+day+'-'+time
@@ -24,9 +30,7 @@ def video_page(request, year, month, day, time):
 
 def category_page(request, category):
     videos = Video.objects.filter(category=category)
-    comments = Comment.objects.order_by("-submit_date")[0:5]
-    categories = Video.CATEGORY_CHOICES
-    return object_list(request, template_name = 'index.html', queryset = videos, paginate_by=5, extra_context={'comments': comments, 'categories': categories})
+    return video_list(request, videos=videos)
 
 def tag_page(request, tag):
     queryset = Video.objects.all()
@@ -109,19 +113,19 @@ def comment(request, vid):
 def toplist(request, type):
 	comments = Comment.objects.order_by("-submit_date")[0:6]
 	categories = Video.CATEGORY_CHOICES
+	q = []
 	if type == 'default':
 		q = Video.objects.extra(select={'w_rating': 'rating_votes*100/(rating_votes+%s)*100/%s*rating_score/rating_votes/100+%s*100/(rating_votes+%s)*%s/100' % (settings.MINIMUM_VOTES_FOR_TOPLIST, Video.rating.range, settings.MINIMUM_VOTES_FOR_TOPLIST, settings.MINIMUM_VOTES_FOR_TOPLIST, settings.MEAN_VOTE_FOR_TOPLIST)})
 		q = q.extra(order_by = ['-w_rating', '-rating_votes'])
 		list = 'default'
-		return object_list(request, template_name = 'toplist.html', queryset = q, paginate_by=5, extra_context={'comments': comments, 'categories': categories, 'list': list,})
 	elif type == 'rating':
 		q = Video.objects.extra(select={'a_rating': 'rating_score*100/%s/rating_votes' % (Video.rating.range)})
 		q = q.extra(order_by = ['-a_rating', '-rating_votes'])
 		list = 'rating'
-		return object_list(request, template_name = 'toplist.html', queryset = q, paginate_by=5, extra_context={'comments': comments, 'categories': categories, 'list': list,})
 	elif type == 'votes':
 		q = Video.objects.extra(select={'a_rating': 'rating_score*100/%s/rating_votes' % (Video.rating.range)})
 		q = q.extra(order_by = ['-rating_votes', '-a_rating'])
 		list = 'votes'
+	if q:
 		return object_list(request, template_name = 'toplist.html', queryset = q, paginate_by=5, extra_context={'comments': comments, 'categories': categories, 'list': list,})
 	raise Http404
