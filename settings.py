@@ -4,7 +4,7 @@ import socket
 
 ROOT_PATH = os.path.dirname(__file__)
 
-if socket.gethostname() == 'harness-test.bej.corp.google.com':
+if socket.gethostname() in ('harness-test.bej.corp.google.com', 'Muer Workstation',):
 	DEBUG = True
 	TEMPLATE_DEBUG = DEBUG
 	
@@ -124,4 +124,4 @@ INSTALLED_APPS = (
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 MINIMUM_VOTES_FOR_TOPLIST = 3
-MEAN_VOTE_FOR_TOPLIST = 3.44
+MEAN_VOTE_FOR_TOPLIST = 4.4
