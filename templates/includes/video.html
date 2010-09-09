@@ -54,7 +54,7 @@ function vote(amnt, video_id){
 			<div id='rating-stat' class='rating-stat'>(目前无人评价)</div>
 		{% endif %}
 		<div id='current-rating-result' class='current-rating-result'></div>
-		<div id="addthis_toolbox" class="addthis_toolbox addthis_default_style" addthis:url="http://www.bestyouku.com/video/{{ video.slug }}/" addthis:title="{{ video.title }}" addthis:description="{{ video.intro }}">
+		<div id="addthis_toolbox" class="addthis_toolbox addthis_default_style" addthis:url={{ request.get_host }}+"/video/{{ video.slug }}/" addthis:title="{{ video.title }}" addthis:description="{{ video.intro }}">
 			<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=hihihi138" class="addthis_button_compact">分享</a>
 			<a class="addthis_button_share.renren.com"></a>
 			<a class="addthis_button_www.douban.com"></a>
