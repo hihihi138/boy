@@ -31,6 +31,8 @@
   	{% endif %}
   	<br />
   	{{ form.comment }}</p>
+	<p><lable for="If you enter anything in this field your comment will be treated as spam">蜜罐 (防垃圾评论用，请不要填任何东西哦。)</lable>
+	{{ form.honeypot }}</p>
     <p><input type="submit" name="submit" class="submit-post" value=" 提交 " /></p>
     <div id="post_status"></div>
 </form>

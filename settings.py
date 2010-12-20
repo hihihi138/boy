@@ -4,7 +4,7 @@ import socket
 
 ROOT_PATH = os.path.dirname(__file__)
 
-if socket.gethostname() in ('harness-test.bej.corp.google.com', 'Muer Workstation',):
+if socket.gethostname() in ('harness-test.bej.corp.google.com', 'Muer Workstation', 'liujun-glaptop'):
 	DEBUG = True
 	TEMPLATE_DEBUG = DEBUG
 	
@@ -22,7 +22,7 @@ if socket.gethostname() in ('harness-test.bej.corp.google.com', 'Muer Workstatio
 	EMAIL_PORT = 587
 	EMAIL_USE_TLS = True
 else:
-	DEBUG =	TEMPLATE_DEBUG = Flase
+	DEBUG =	TEMPLATE_DEBUG = False
 	
 	DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 	DATABASE_NAME = 'bestyouku_mydata'             # Or path to database file if using sqlite3.
